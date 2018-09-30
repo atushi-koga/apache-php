@@ -11,8 +11,11 @@ RUN usermod -u 1000 apache \
     && groupmod -g 1000 apache
 COPY httpd.conf /etc/httpd/conf/httpd.conf
 
-RUN yum -y install --enablerepo=remi,remi-php72 php php-cli php-common php-devel php-fpm php-gd php-mbstring php-mysqlnd php-pdo php-pear php-pecl-apcu php-soap php-xml php-xmlrpc 
+RUN yum -y install --enablerepo=remi,remi-php72 php php-cli php-common　php-fedora-autoloader php-fpm php-gd php-json php-mbstring php-mcrypt php-opcache php-pdo php-pear php-pecl-zip php-pgsql php-process php-xml
 RUN yum -y install zip unzip
+RUN ["touch", "/var/log/php.log"]
+RUN ["chmod", "a+w", "/var/log/php.log"]
+COPY php.ini /etc/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
